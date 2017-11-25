@@ -45,6 +45,5 @@ const peopleList = [{first_name:"Ed",last_name:"Wince",address:"755 South Lafaye
 
 const contactListStore = new ContactListStore;
 dispatcher.register(contactListStore.handleActions.bind(contactListStore));
-window.dispatcher = dispatcher;
 
 export default contactListStore;

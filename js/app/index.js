@@ -24,38 +24,15 @@ class ContactListApp extends React.Component {
 				list: ContactListStore.getAll()
 			});
 		});
-
-
 	}
 
 	addContact(contact) {
 		ContactAction.addContact(contact);
 	}
 
-	/*addContact(contact) {
-		let newPeopleList = this.state.list;
-
-		newPeopleList.push(contact);
-
-		this.setState({
-			list: newPeopleList
-		});
-	}*/
-
 	removeContact(index) {
 		ContactAction.removeContact(index);
 	}
-
-	/*removeContact(contactIndex) {
-
-		let newContactList = this.state.list;
-		
-		let updatedList = newContactList.splice(contactIndex, 1);
-
-		this.setState({
-			list: this.state.list
-		});
-	}*/
 
 	render() {
 		return (<div className="container-fluid">
@@ -67,10 +44,6 @@ class ContactListApp extends React.Component {
 	           );
 	}
 }
-
-//const peopleList = [{"id": 1, "first_name":"Ed","last_name":"Wince","address":"755 South Lafayette Dr."},
-//			      {"id": 2, "first_name":"jake","last_name":"loyd","address":"599 Excalibur Dr."}];
-
 
 
 ReactDOM.render(<ContactListApp />, document.getElementById('app'));
