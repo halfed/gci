@@ -31,30 +31,34 @@ export class ContactForm extends React.Component {
 
 	render() {
 		return (
-			<div className="container contact-form">
-				<div className="row">
-					<form name="contact_form" id="contact_form" className="contact-form" onSubmit={this.handleSubmit}>
-						<fieldset>
-							<legend>Add Contact</legend>
-							<div>
-								<label htmlFor="fname">Name:</label>
-								<input id="fname" name="fname" type="text" value={this.props.first_name} required/>
+				<div className="col col-lg-12 col-sm-12">
+					<div className="container">
+						<div className="row">
+							<div className="col col-lg-6 col-sm-8 col-lg-offset-1">
+								<form name="contact_form" id="contact_form" className="contact-form" onSubmit={this.handleSubmit}>
+									<fieldset>
+										<legend>Add Contact</legend>
+										<div className="form-group">
+											<label htmlFor="fname">Name:</label>
+											<input id="fname" name="fname" className="form-control" type="text" required/>
+										</div>
+										<div className="form-group">
+											<label htmlFor="lname">LastName:</label>
+											<input id="lname" name="lname" className="form-control" type="text" required/>
+										</div>
+										<div className="form-group">
+											<label htmlFor="address">Address:</label>
+											<input id="address" name="address" className="form-control" type="text" required/>
+										</div>
+										<div>
+											<input type="submit" name="submit" id="submit" className="btn btn-primary" />
+										</div>
+									</fieldset>
+								</form>
 							</div>
-							<div>
-								<label htmlFor="lname">LastName:</label>
-								<input id="lname" name="lname" type="text" required/>
-							</div>
-							<div>
-								<label htmlFor="address">Address:</label>
-								<input id="address" name="address" type="text" required/>
-							</div>
-							<div>
-								<input type="submit" name="submit" id="submit" className="btn" />
-							</div>
-						</fieldset>
-					</form>
+						</div>
+					</div>
 				</div>
-			</div>
 			);
 	}
 }

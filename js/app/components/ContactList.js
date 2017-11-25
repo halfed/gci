@@ -15,15 +15,24 @@ export class ContactList extends React.Component {
 
 	render() {
 		const listContent = this.props.contactList.map((list, i)=>{
-			return <div className="row" key={i}>
-						<div className="col-md-4 contact-fname">{list.first_name}</div>
-						<div className="col-md-4 contact-lname">{list.last_name}</div>
-						<div className="col-md-4 contact-address">{list.address}</div>
-						<button name="remove" id="remove" className="btn" onClick={this.handleClick} data-typeid={i}>Remove</button>
+			return <div className="container-fluid" key={i}>
+						<div className="row list-container">
+							<div className="col-lg-3 col-sm-3 contact-fname">{list.first_name}</div>
+							<div className="col-lg-3 col-sm-3 contact-lname">{list.last_name}</div>
+							<div className="col-lg-3 col-sm-3 contact-address">{list.address}</div>
+							<button name="remove" id="remove" className="btn btn-secondary btn-sm delete-inline" onClick={this.handleClick} data-typeid={i}>Remove</button>
+						</div>
 					</div>
 		});
 		return (
-				<div className="container contact-info">
+				<div className="col col-lg-9 col-sm-12 col-lg-offset-1">
+					<div className="container-fluid">
+						<div className="row list-container heading">
+							<div className="col-lg-3 col-sm-3">First Name:</div>
+							<div className="col-lg-3 col-sm-3">Last Name:</div>
+							<div className="col-lg-3 col-sm-3">Address:</div>
+						</div>
+					</div>
 					{listContent}
 		       </div>
 		       );

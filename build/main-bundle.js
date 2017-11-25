@@ -1241,14 +1241,13 @@ class ContactListApp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
 	render() {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
-			{ className: 'address-container' },
+			{ className: 'container-fluid' },
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'header',
-				null,
-				'Address Book'
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { onSubmit: this.addContact }),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact })
+				'div',
+				{ className: 'row' },
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { onSubmit: this.addContact }),
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact })
+			)
 		);
 	}
 }
@@ -8030,32 +8029,59 @@ class ContactList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 		const listContent = this.props.contactList.map((list, i) => {
 			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
-				{ className: 'row', key: i },
+				{ className: 'container-fluid', key: i },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					'div',
-					{ className: 'col-md-4 contact-fname' },
-					list.first_name
-				),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					'div',
-					{ className: 'col-md-4 contact-lname' },
-					list.last_name
-				),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					'div',
-					{ className: 'col-md-4 contact-address' },
-					list.address
-				),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					'button',
-					{ name: 'remove', id: 'remove', className: 'btn', onClick: this.handleClick, 'data-typeid': i },
-					'Remove'
+					{ className: 'row list-container' },
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3 contact-fname' },
+						list.first_name
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3 contact-lname' },
+						list.last_name
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3 contact-address' },
+						list.address
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'button',
+						{ name: 'remove', id: 'remove', className: 'btn btn-secondary btn-sm delete-inline', onClick: this.handleClick, 'data-typeid': i },
+						'Remove'
+					)
 				)
 			);
 		});
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
-			{ className: 'container contact-info' },
+			{ className: 'col col-lg-9 col-sm-12 col-lg-offset-1' },
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'div',
+				{ className: 'container-fluid' },
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+					'div',
+					{ className: 'row list-container heading' },
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3' },
+						'First Name:'
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3' },
+						'Last Name:'
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'div',
+						{ className: 'col-lg-3 col-sm-3' },
+						'Address:'
+					)
+				)
+			),
 			listContent
 		);
 	}
@@ -8104,55 +8130,63 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 	render() {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			"div",
-			{ className: "container contact-form" },
+			{ className: "col col-lg-12 col-sm-12" },
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"div",
-				{ className: "row" },
+				{ className: "container" },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-					"form",
-					{ name: "contact_form", id: "contact_form", className: "contact-form", onSubmit: this.handleSubmit },
+					"div",
+					{ className: "row" },
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-						"fieldset",
-						null,
+						"div",
+						{ className: "col col-lg-6 col-sm-8 col-lg-offset-1" },
 						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							"legend",
-							null,
-							"Add Contact"
-						),
-						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							"div",
-							null,
+							"form",
+							{ name: "contact_form", id: "contact_form", className: "contact-form", onSubmit: this.handleSubmit },
 							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-								"label",
-								{ htmlFor: "fname" },
-								"Name:"
-							),
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "fname", name: "fname", type: "text", value: this.props.first_name, required: true })
-						),
-						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							"div",
-							null,
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-								"label",
-								{ htmlFor: "lname" },
-								"LastName:"
-							),
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "lname", name: "lname", type: "text", required: true })
-						),
-						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							"div",
-							null,
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-								"label",
-								{ htmlFor: "address" },
-								"Address:"
-							),
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "address", name: "address", type: "text", required: true })
-						),
-						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-							"div",
-							null,
-							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "submit", name: "submit", id: "submit", className: "btn" })
+								"fieldset",
+								null,
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+									"legend",
+									null,
+									"Add Contact"
+								),
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+									"div",
+									{ className: "form-group" },
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+										"label",
+										{ htmlFor: "fname" },
+										"Name:"
+									),
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "fname", name: "fname", className: "form-control", type: "text", required: true })
+								),
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+									"div",
+									{ className: "form-group" },
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+										"label",
+										{ htmlFor: "lname" },
+										"LastName:"
+									),
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "lname", name: "lname", className: "form-control", type: "text", required: true })
+								),
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+									"div",
+									{ className: "form-group" },
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+										"label",
+										{ htmlFor: "address" },
+										"Address:"
+									),
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "address", name: "address", className: "form-control", type: "text", required: true })
+								),
+								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+									"div",
+									null,
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "submit", name: "submit", id: "submit", className: "btn btn-primary" })
+								)
+							)
 						)
 					)
 				)
@@ -8541,7 +8575,6 @@ class ContactListStore extends __WEBPACK_IMPORTED_MODULE_0_events__["EventEmitte
 	}
 
 	handleActions(action) {
-		console.log('Contact Store recieved an action' + action);
 		switch (action.type) {
 			case 'CREATE_CONTACT':
 				{

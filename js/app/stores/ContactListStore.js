@@ -27,7 +27,6 @@ class ContactListStore extends EventEmitter {
 	}
 
 	handleActions(action) {
-		console.log('Contact Store recieved an action' + action);
 		switch(action.type) {
 			case 'CREATE_CONTACT': {
 				this.addContact(action.contact);

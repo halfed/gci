@@ -1,3 +1,31 @@
 body {
-	background-color: #000000;
+	background-color: #FFFFFF;
+}
+
+.app-container {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+header {
+	text-align: center;
+}
+
+.contact-form {
+	margin-bottom: 10px;
+}
+
+
+.list-container {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.heading {
+	font-weight: bold;
+}
+
+.delete-inline {
+	top: -3px;
+    position: relative;
 }
