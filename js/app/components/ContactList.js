@@ -16,7 +16,7 @@ export class ContactList extends React.Component {
 	render() {
 		const listContent = this.props.contactList.map((list, i)=>{
 			return <div className="container-fluid" key={i}>
-						<div className="row list-container">
+						<div className="row contact">
 							<div className="col-lg-3 col-sm-3 contact-fname">{list.first_name}</div>
 							<div className="col-lg-3 col-sm-3 contact-lname">{list.last_name}</div>
 							<div className="col-lg-3 col-sm-3 contact-address">{list.address}</div>
@@ -25,9 +25,9 @@ export class ContactList extends React.Component {
 					</div>
 		});
 		return (
-				<div className="col col-lg-9 col-sm-12 col-lg-offset-1">
+				<div className="col col-lg-9 col-sm-12 col-lg-offset-1 list-container">
 					<div className="container-fluid">
-						<div className="row list-container heading">
+						<div className="row heading">
 							<div className="col-lg-3 col-sm-3">First Name:</div>
 							<div className="col-lg-3 col-sm-3">Last Name:</div>
 							<div className="col-lg-3 col-sm-3">Address:</div>

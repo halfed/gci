@@ -60,8 +60,8 @@ class ContactListApp extends React.Component {
 	render() {
 		return (<div className="container-fluid">
 					<div className="row">
-						<ContactForm onSubmit={this.addContact} />
 						<ContactList contactList={this.state.list} onClick={this.removeContact} />
+						<ContactForm onSubmit={this.addContact} />
 					</div>
 	            </div>
 	           );

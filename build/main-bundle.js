@@ -1245,8 +1245,8 @@ class ContactListApp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				{ className: 'row' },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { onSubmit: this.addContact }),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact })
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact }),
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { onSubmit: this.addContact })
 			)
 		);
 	}
@@ -8032,7 +8032,7 @@ class ContactList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 				{ className: 'container-fluid', key: i },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					'div',
-					{ className: 'row list-container' },
+					{ className: 'row contact' },
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 						'div',
 						{ className: 'col-lg-3 col-sm-3 contact-fname' },
@@ -8058,13 +8058,13 @@ class ContactList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 		});
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
-			{ className: 'col col-lg-9 col-sm-12 col-lg-offset-1' },
+			{ className: 'col col-lg-9 col-sm-12 col-lg-offset-1 list-container' },
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				{ className: 'container-fluid' },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					'div',
-					{ className: 'row list-container heading' },
+					{ className: 'row heading' },
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 						'div',
 						{ className: 'col-lg-3 col-sm-3' },
