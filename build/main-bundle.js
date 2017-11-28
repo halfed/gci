@@ -1193,50 +1193,35 @@ class ContactListApp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
 		super(props);
 
 		this.state = {
-			//list: peopleList
-			list: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].getAll()
+			list: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].getAll(),
+			contactFromList: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].passContact()
 		};
 
 		this.addContact = this.addContact.bind(this);
+		this.getContact = this.getContact.bind(this);
 		this.removeContact = this.removeContact.bind(this);
 	}
 
 	componentWillMount() {
 		__WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].on("change", () => {
 			this.setState({
-				list: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].getAll()
+				list: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].getAll(),
+				contactFromList: __WEBPACK_IMPORTED_MODULE_5__stores_ContactListStore__["a" /* default */].passContact()
 			});
 		});
 	}
 
-	addContact(contact) {
-		__WEBPACK_IMPORTED_MODULE_4__actions_ContactAction__["a" /* addContact */](contact);
+	addContact(contact, index) {
+		__WEBPACK_IMPORTED_MODULE_4__actions_ContactAction__["a" /* addContact */](contact, index);
 	}
 
-	/*addContact(contact) {
- 	let newPeopleList = this.state.list;
- 
- 	newPeopleList.push(contact);
- 
- 	this.setState({
- 		list: newPeopleList
- 	});
- }*/
+	getContact(index) {
+		__WEBPACK_IMPORTED_MODULE_4__actions_ContactAction__["b" /* getContact */](index);
+	}
 
 	removeContact(index) {
-		__WEBPACK_IMPORTED_MODULE_4__actions_ContactAction__["b" /* removeContact */](index);
+		__WEBPACK_IMPORTED_MODULE_4__actions_ContactAction__["c" /* removeContact */](index);
 	}
-
-	/*removeContact(contactIndex) {
- 
- 	let newContactList = this.state.list;
- 	
- 	let updatedList = newContactList.splice(contactIndex, 1);
- 
- 	this.setState({
- 		list: this.state.list
- 	});
- }*/
 
 	render() {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -1245,16 +1230,12 @@ class ContactListApp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				{ className: 'row' },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact }),
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { onSubmit: this.addContact })
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_ContactList__["a" /* ContactList */], { contactList: this.state.list, onClick: this.removeContact, onGetContactClick: this.getContact }),
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_ContactForm__["a" /* ContactForm */], { editContact: this.state.contactFromList, onSubmit: this.addContact })
 			)
 		);
 	}
 }
-
-//const peopleList = [{"id": 1, "first_name":"Ed","last_name":"Wince","address":"755 South Lafayette Dr."},
-//			      {"id": 2, "first_name":"jake","last_name":"loyd","address":"599 Excalibur Dr."}];
-
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ContactListApp, null), document.getElementById('app'));
 
@@ -8017,12 +7998,19 @@ class ContactList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
+		this.handleGetContactClick = this.handleGetContactClick.bind(this);
 	}
 
 	handleClick(e) {
 		e.preventDefault();
 		const contactId = e.target.getAttribute('data-typeId');
 		this.props.onClick(contactId);
+	}
+
+	handleGetContactClick(e) {
+		e.preventDefault();
+		const contactId = e.target.getAttribute('data-typeId');
+		this.props.onGetContactClick(contactId);
 	}
 
 	render() {
@@ -8050,8 +8038,13 @@ class ContactList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 					),
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 						'button',
-						{ name: 'remove', id: 'remove', className: 'btn btn-secondary btn-sm delete-inline', onClick: this.handleClick, 'data-typeid': i },
+						{ name: 'remove', id: 'remove', className: 'btn btn-secondary btn-sm btn-inline', onClick: this.handleClick, 'data-typeid': i },
 						'Remove'
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'button',
+						{ name: 'edit', id: 'edit', className: 'btn btn-secondary btn-sm btn-inline', onClick: this.handleGetContactClick, 'data-typeid': i },
+						'Edit'
 					)
 				)
 			);
@@ -8103,7 +8096,16 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			first_name: "",
+			last_name: "",
+			address: "",
+			targetContact: this.props.editContact
+		};
+
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentWillMount() {
@@ -8114,16 +8116,27 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 		});
 	}
 
+	handleChange(data) {
+		const state = this.state.targetContact;
+		const name = data.target.name;
+		state[name] = data.target.value;
+		this.setState(state);
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 
-		const formData = new FormData(e.target);
+		//const formData = new FormData(e.target);
 		const state = this.state;
-		state["first_name"] = e.target.fname.value;
-		state["last_name"] = e.target.lname.value;
+		state["first_name"] = e.target.first_name.value;
+		state["last_name"] = e.target.last_name.value;
 		state["address"] = e.target.address.value;
+		state["index"] = e.target.index.value;
+
 		this.setState(state);
+
 		this.props.onSubmit(state);
+
 		document.getElementById("contact_form").reset();
 	}
 
@@ -8156,20 +8169,20 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 									{ className: "form-group" },
 									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 										"label",
-										{ htmlFor: "fname" },
+										{ htmlFor: "first_name" },
 										"Name:"
 									),
-									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "fname", name: "fname", className: "form-control", type: "text", required: true })
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "first_name", name: "first_name", className: "form-control", type: "text", value: this.state.targetContact.first_name, onChange: this.handleChange, required: true })
 								),
 								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 									"div",
 									{ className: "form-group" },
 									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 										"label",
-										{ htmlFor: "lname" },
+										{ htmlFor: "last_name" },
 										"LastName:"
 									),
-									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "lname", name: "lname", className: "form-control", type: "text", required: true })
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "last_name", name: "last_name", className: "form-control", type: "text", value: this.state.targetContact.last_name, onChange: this.handleChange, required: true })
 								),
 								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 									"div",
@@ -8179,11 +8192,12 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 										{ htmlFor: "address" },
 										"Address:"
 									),
-									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "address", name: "address", className: "form-control", type: "text", required: true })
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "address", name: "address", className: "form-control", type: "text", value: this.state.targetContact.address, onChange: this.handleChange, required: true })
 								),
 								__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 									"div",
 									null,
+									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "hidden", name: "index", value: this.state.targetContact.index }),
 									__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "submit", name: "submit", id: "submit", className: "btn btn-primary" })
 								)
 							)
@@ -8203,14 +8217,23 @@ class ContactForm extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addContact;
-/* harmony export (immutable) */ __webpack_exports__["b"] = removeContact;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getContact;
+/* harmony export (immutable) */ __webpack_exports__["c"] = removeContact;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__ = __webpack_require__(18);
 
 
-function addContact(contact) {
+function addContact(contact, index) {
 	__WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
 		type: 'CREATE_CONTACT',
-		contact: contact
+		contact: contact,
+		index: index
+	});
+}
+
+function getContact(index) {
+	__WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
+		type: 'GET_CONTACT',
+		index: index
 	});
 }
 
@@ -8553,12 +8576,41 @@ class ContactListStore extends __WEBPACK_IMPORTED_MODULE_0_events__["EventEmitte
 	constructor() {
 		super();
 
+		// TWO OBJECTS ONE FOR LIST DISPLAY AND ANOTHER FOR THE SINGLE CONTACT TO EDIT
 		this.list = peopleList;
+		this.contactFromList = {
+			first_name: "",
+			last_name: "",
+			address: "",
+			index: ""
+		};
 	}
 
-	addContact(contact) {
+	addContact(contact, index) {
 		const newPeopleList = this.list;
-		newPeopleList.push(contact);
+		const newContact = contact;
+
+		if (newContact.index !== "" && newContact.index !== null) {
+			newPeopleList.splice(newContact.index, 1, newContact);
+		} else {
+			newPeopleList.push(newContact);
+		}
+
+		// CLEAR CONTACT TO EDIT SO FORM IS BLANK
+		this.contactFromList.first_name = "";
+		this.contactFromList.last_name = "";
+		this.contactFromList.address = "";
+		this.contactFromList.index = "";
+
+		this.emit("change");
+	}
+
+	getContact(index) {
+		this.contactFromList.first_name = this.list[index].first_name;
+		this.contactFromList.last_name = this.list[index].last_name;
+		this.contactFromList.address = this.list[index].address;
+		this.contactFromList.index = index;
+
 		this.emit("change");
 	}
 
@@ -8574,11 +8626,20 @@ class ContactListStore extends __WEBPACK_IMPORTED_MODULE_0_events__["EventEmitte
 		return this.list;
 	}
 
+	passContact() {
+		return this.contactFromList;
+	}
+
 	handleActions(action) {
 		switch (action.type) {
 			case 'CREATE_CONTACT':
 				{
-					this.addContact(action.contact);
+					this.addContact(action.contact, action.index);
+					break;
+				}
+			case 'GET_CONTACT':
+				{
+					this.getContact(action.index);
 					break;
 				}
 			case 'DELETE_CONTACT':
@@ -8594,7 +8655,6 @@ const peopleList = [{ first_name: "Ed", last_name: "Wince", address: "755 South 
 
 const contactListStore = new ContactListStore();
 __WEBPACK_IMPORTED_MODULE_1__dispatchers_AppDispatcher__["a" /* default */].register(contactListStore.handleActions.bind(contactListStore));
-window.dispatcher = __WEBPACK_IMPORTED_MODULE_1__dispatchers_AppDispatcher__["a" /* default */];
 
 /* harmony default export */ __webpack_exports__["a"] = (contactListStore);
 

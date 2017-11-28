@@ -1,11 +1,20 @@
 import React from 'react';
-///import NewContactStore from './stores/ContactListStore';
 
 export class ContactForm extends React.Component {
 
 	constructor(props) {
 		super(props);
+		
+
+		this.state = {
+	      first_name: "",
+	      last_name: "",
+	      address: "",
+	      targetContact: this.props.editContact
+	    }
+
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentWillMount() {
@@ -16,16 +25,26 @@ export class ContactForm extends React.Component {
 	    });
 	 }
 
+	 handleChange(data) {
+	    const state = this.state.targetContact;
+	    const name = data.target.name;
+	    state[name] = data.target.value;
+	    this.setState(state);
+	  }
+
 	handleSubmit(e) {
 		e.preventDefault();
 		
-		const formData = new FormData(e.target);
 		const state = this.state;
-		state["first_name"] = e.target.fname.value;
-		state["last_name"] = e.target.lname.value;
+		state["first_name"] = e.target.first_name.value;
+		state["last_name"] = e.target.last_name.value;
 		state["address"] = e.target.address.value;
+		state["index"] = e.target.index.value;
+
 		this.setState(state);
+
 		this.props.onSubmit(state);
+		
 		document.getElementById("contact_form").reset();
 	}
 
@@ -39,18 +58,19 @@ export class ContactForm extends React.Component {
 									<fieldset>
 										<legend>Add Contact</legend>
 										<div className="form-group">
-											<label htmlFor="fname">Name:</label>
-											<input id="fname" name="fname" className="form-control" type="text" required/>
+											<label htmlFor="first_name">Name:</label>
+											<input id="first_name" name="first_name" className="form-control" type="text" value={this.state.targetContact.first_name} onChange={this.handleChange} required/>
 										</div>
 										<div className="form-group">
-											<label htmlFor="lname">LastName:</label>
-											<input id="lname" name="lname" className="form-control" type="text" required/>
+											<label htmlFor="last_name">LastName:</label>
+											<input id="last_name" name="last_name" className="form-control" type="text"  value={this.state.targetContact.last_name} onChange={this.handleChange} required/>
 										</div>
 										<div className="form-group">
 											<label htmlFor="address">Address:</label>
-											<input id="address" name="address" className="form-control" type="text" required/>
+											<input id="address" name="address" className="form-control" type="text" value={this.state.targetContact.address} onChange={this.handleChange} required/>
 										</div>
 										<div>
+											<input type="hidden" name="index" value={this.state.targetContact.index} />
 											<input type="submit" name="submit" id="submit" className="btn btn-primary" />
 										</div>
 									</fieldset>

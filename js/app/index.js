@@ -10,24 +10,30 @@ class ContactListApp extends React.Component {
 		super(props);
 
 		this.state = {
-			//list: peopleList
-			list: ContactListStore.getAll()
+			list: ContactListStore.getAll(),
+			contactFromList: ContactListStore.passContact()
 		}
 
 		this.addContact = this.addContact.bind(this);
+		this.getContact = this.getContact.bind(this);
 		this.removeContact = this.removeContact.bind(this);
 	}
 
 	componentWillMount() {
 		ContactListStore.on("change", () => {
 			this.setState({
-				list: ContactListStore.getAll()
+				list: ContactListStore.getAll(),
+				contactFromList: ContactListStore.passContact()
 			});
 		});
 	}
 
-	addContact(contact) {
-		ContactAction.addContact(contact);
+	addContact(contact, index) {
+		ContactAction.addContact(contact, index);
+	}
+
+	getContact(index) {
+		ContactAction.getContact(index);
 	}
 
 	removeContact(index) {
@@ -37,13 +43,12 @@ class ContactListApp extends React.Component {
 	render() {
 		return (<div className="container-fluid">
 					<div className="row">
-						<ContactList contactList={this.state.list} onClick={this.removeContact} />
-						<ContactForm onSubmit={this.addContact} />
+						<ContactList contactList={this.state.list} onClick={this.removeContact} onGetContactClick={this.getContact}/>
+						<ContactForm editContact={this.state.contactFromList} onSubmit={this.addContact} />
 					</div>
 	            </div>
 	           );
 	}
 }
-
 
 ReactDOM.render(<ContactListApp />, document.getElementById('app'));

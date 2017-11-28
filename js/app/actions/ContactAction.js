@@ -1,9 +1,17 @@
 import dispatcher from '../dispatchers/AppDispatcher';
 
-export function addContact(contact) {
+export function addContact(contact, index) {
 	dispatcher.dispatch({
 		type: 'CREATE_CONTACT',
-		contact: contact
+		contact: contact,
+		index: index
+	});
+}
+
+export function getContact(index) {
+	dispatcher.dispatch({
+		type: 'GET_CONTACT',
+		index: index
 	});
 }
 

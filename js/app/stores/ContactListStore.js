@@ -5,12 +5,42 @@ class ContactListStore extends EventEmitter {
 	constructor() {
 		super();
 
+		// TWO OBJECTS ONE FOR LIST DISPLAY AND ANOTHER FOR THE SINGLE CONTACT TO EDIT
 		this.list = peopleList;
+		this.contactFromList = {
+				      first_name: "",
+				      last_name: "",
+				      address: "",
+				      index: ""
+				    }
 	}
 
-	addContact(contact) {
+	addContact(contact, index) {
 		const newPeopleList = this.list;
-		newPeopleList.push(contact);
+		const newContact = contact;
+
+		if(newContact.index !== "" && newContact.index !== null) {
+			newPeopleList.splice(newContact.index, 1, newContact);
+		}
+		else {
+			newPeopleList.push(newContact);
+		}
+
+		// CLEAR CONTACT TO EDIT SO FORM IS BLANK
+		this.contactFromList.first_name = "";
+		this.contactFromList.last_name = "";
+		this.contactFromList.address = "";
+		this.contactFromList.index = "";
+		
+		this.emit("change");
+	}
+
+	getContact(index) {
+		this.contactFromList.first_name = this.list[index].first_name;
+		this.contactFromList.last_name = this.list[index].last_name;
+		this.contactFromList.address = this.list[index].address;
+		this.contactFromList.index = index;
+
 		this.emit("change");
 	}
 
@@ -26,10 +56,18 @@ class ContactListStore extends EventEmitter {
 		return this.list;
 	}
 
+	passContact() {
+		return this.contactFromList;
+	}
+
 	handleActions(action) {
 		switch(action.type) {
 			case 'CREATE_CONTACT': {
-				this.addContact(action.contact);
+				this.addContact(action.contact, action.index);
+				break;
+			}
+			case 'GET_CONTACT': {
+				this.getContact(action.index);
 				break;
 			}
 			case 'DELETE_CONTACT': {
